@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\STM32F4_Project_Template;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\STM32F4_Project_Template;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -384,12 +384,12 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\main.c</FilePath>
+              <FilePath>..\Scr\main.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\stm32f4xx_it.c</FilePath>
+              <FilePath>..\Scr\stm32f4xx_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -399,13 +399,18 @@
             <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_stm32f4xx.c</FilePath>
+              <FilePath>..\Scr\system_stm32f4xx.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>STM32F4xx_StdPeriph_Driver</GroupName>
           <Files>
+            <File>
+              <FileName>misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
+            </File>
             <File>
               <FileName>stm32f4xx_gpio.c</FileName>
               <FileType>1</FileType>

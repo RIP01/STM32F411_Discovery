@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\STM32F4_Project_Template;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\..\STM32F411_Discovery;..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

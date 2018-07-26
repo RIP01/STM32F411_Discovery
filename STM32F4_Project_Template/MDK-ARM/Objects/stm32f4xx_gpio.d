@@ -7,7 +7,7 @@
 .\objects\stm32f4xx_gpio.o: C:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h
 .\objects\stm32f4xx_gpio.o: C:\Keil_v5\ARM\CMSIS\Include\core_cm4_simd.h
 .\objects\stm32f4xx_gpio.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
-.\objects\stm32f4xx_gpio.o: ..\..\STM32F4_Project_Template\stm32f4xx_conf.h
+.\objects\stm32f4xx_gpio.o: ..\Inc\stm32f4xx_conf.h
 .\objects\stm32f4xx_gpio.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
 .\objects\stm32f4xx_gpio.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\objects\stm32f4xx_gpio.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h
