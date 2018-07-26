@@ -13369,47 +13369,41 @@ void GPIO_Configuration(void);
 void Delay(volatile uint32_t nCount);
 
 int main(void)
-{
-	
-  GPIO_Configuration();
-	GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000)| ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000) );
-  while (1)
-  {
-			
-			GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x1000);
-			Delay(1000000);
-		GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x2000);
-			Delay(1000000);
-		GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x4000);
-			Delay(1000000);
-    GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x8000);
-			Delay(1000000);
-  }
+{					
+		GPIO_Configuration();
+		GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000)| ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000) );
+		while (1)
+		{		
+				if(GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x0001)))
+						GPIO_ToggleBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+				else
+						GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+		}
 }
 
 void GPIO_Configuration(void)
-{
-  RCC_AHB1PeriphClockCmd(((uint32_t)0x00000008) | ((uint32_t)0x00000001), ENABLE);
-
-   
-  GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x1000) | ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000);
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)), &GPIO_InitStructure);
-   
-  GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x0001);
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)), &GPIO_InitStructure);
+{		
+		RCC_AHB1PeriphClockCmd(((uint32_t)0x00000008) | ((uint32_t)0x00000001), ENABLE);
+		 
+		GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x1000) | ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000);
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+		GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)), &GPIO_InitStructure);
+		 
+		GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x0001);
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+		GPIO_InitStructure.GPIO_Speed = GPIO_Fast_Speed;
+		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)), &GPIO_InitStructure);
 }
 void Delay(volatile uint32_t nCount)
 {
-  while(nCount--)
-  {
-  }
+		while(nCount--)
+		{
+		}
 }
 
-# 62 "..\\main.c"
+# 56 "..\\main.c"
 

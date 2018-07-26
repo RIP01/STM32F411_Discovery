@@ -38802,58 +38802,52 @@ Nvoid Delay(__IO uint32_t nCount);
 Xvoid Delay(volatile uint32_t nCount);
 N
 Nint main(void)
-N{
-N	
-N  GPIO_Configuration();
-N	GPIO_ResetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15 );
-X	GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000)| ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000) );
-N  while (1)
-N  {
-N			//GPIO_SetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15);
-N			GPIO_Write(GPIOD,0x1000);
-X			GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x1000);
-N			Delay(1000000);
-N		GPIO_Write(GPIOD,0x2000);
-X		GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x2000);
-N			Delay(1000000);
-N		GPIO_Write(GPIOD,0x4000);
-X		GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x4000);
-N			Delay(1000000);
-N    GPIO_Write(GPIOD,0x8000);
-X    GPIO_Write(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),0x8000);
-N			Delay(1000000);
-N  }
+N{					
+N		GPIO_Configuration();
+N		GPIO_ResetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15 );
+X		GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000)| ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000) );
+N		while (1)
+N		{		
+N				if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0))
+X				if(GPIO_ReadInputDataBit(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)),((uint16_t)0x0001)))
+N						GPIO_ToggleBits(GPIOD,GPIO_Pin_12);
+X						GPIO_ToggleBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N				else
+N						GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+X						GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N		}
 N}
 N
 Nvoid GPIO_Configuration(void)
-N{
-N  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOA, ENABLE);
-X  RCC_AHB1PeriphClockCmd(((uint32_t)0x00000008) | ((uint32_t)0x00000001), ENABLE);
-N
-N  /* Configure PB0 PB1 in output pushpull mode */
-N  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15;
-X  GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x1000) | ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000);
-N  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-N  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-N  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-X  GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
-N  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-N  GPIO_Init(GPIOD, &GPIO_InitStructure);
-X  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)), &GPIO_InitStructure);
-N  /* Configure PA0 in input mode */
-N  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-X  GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x0001);
-N  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-N  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-N  GPIO_Init(GPIOA, &GPIO_InitStructure);
-X  GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)), &GPIO_InitStructure);
+N{		
+N		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOA, ENABLE);
+X		RCC_AHB1PeriphClockCmd(((uint32_t)0x00000008) | ((uint32_t)0x00000001), ENABLE);
+N		/* Configure PB0 PB1 in output pushpull mode */
+N		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15;
+X		GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x1000) | ((uint16_t)0x2000)|((uint16_t)0x4000) | ((uint16_t)0x8000);
+N		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+N		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+N		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+X		GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+N		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+N		GPIO_Init(GPIOD, &GPIO_InitStructure);
+X		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)), &GPIO_InitStructure);
+N		/* Configure PA0 in input mode */
+N		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+X		GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x0001);
+N		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+N		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+X		GPIO_InitStructure.GPIO_Speed = GPIO_Fast_Speed;
+N		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+N		GPIO_Init(GPIOA, &GPIO_InitStructure);
+X		GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0000)), &GPIO_InitStructure);
 N}
 Nvoid Delay(__IO uint32_t nCount)
 Xvoid Delay(volatile uint32_t nCount)
 N{
-N  while(nCount--)
-N  {
-N  }
+N		while(nCount--)
+N		{
+N		}
 N}
 N
 N#ifdef  USE_FULL_ASSERT

@@ -5,78 +5,80 @@
                           AREA ||i.Delay||, CODE, READONLY, ALIGN=1
 
                   Delay PROC
-;;;42     }
-;;;43     void Delay(__IO uint32_t nCount)
+;;;36     }
+;;;37     void Delay(__IO uint32_t nCount)
 000000  b501              PUSH     {r0,lr}
                   |L1.2|
-;;;44     {
-;;;45       while(nCount--)
+;;;38     {
+;;;39     		while(nCount--)
 000002  9800              LDR      r0,[sp,#0]
 000004  1e41              SUBS     r1,r0,#1
 000006  9100              STR      r1,[sp,#0]
 000008  d2fb              BCS      |L1.2|
-;;;46       {
-;;;47       }
-;;;48     }
+;;;40     		{
+;;;41     		}
+;;;42     }
 00000a  bd08              POP      {r3,pc}
-;;;49     
+;;;43     
                           ENDP
 
 
                           AREA ||i.GPIO_Configuration||, CODE, READONLY, ALIGN=2
 
                   GPIO_Configuration PROC
-;;;25     
-;;;26     void GPIO_Configuration(void)
+;;;19     
+;;;20     void GPIO_Configuration(void)
 000000  b570              PUSH     {r4-r6,lr}
-;;;27     {
-;;;28       RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOA, ENABLE);
+;;;21     {		
+;;;22     		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOA, ENABLE);
 000002  2101              MOVS     r1,#1
 000004  2009              MOVS     r0,#9
 000006  f7fffffe          BL       RCC_AHB1PeriphClockCmd
-;;;29     
-;;;30       /* Configure PB0 PB1 in output pushpull mode */
-;;;31       GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15;
-00000a  4c0c              LDR      r4,|L2.60|
+;;;23     		/* Configure PB0 PB1 in output pushpull mode */
+;;;24     		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15;
+00000a  4c0d              LDR      r4,|L2.64|
 00000c  f44f4070          MOV      r0,#0xf000
-;;;32       GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+;;;25     		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 000010  2501              MOVS     r5,#1
 000012  6020              STR      r0,[r4,#0]  ; GPIO_InitStructure
 000014  7125              STRB     r5,[r4,#4]
-;;;33       GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+;;;26     		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 000016  2600              MOVS     r6,#0
 000018  71a6              STRB     r6,[r4,#6]
-;;;34       GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+;;;27     		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 00001a  2003              MOVS     r0,#3
 00001c  7160              STRB     r0,[r4,#5]
-;;;35       GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+;;;28     		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 00001e  71e5              STRB     r5,[r4,#7]
-;;;36       GPIO_Init(GPIOD, &GPIO_InitStructure);
+;;;29     		GPIO_Init(GPIOD, &GPIO_InitStructure);
 000020  4621              MOV      r1,r4
-000022  4807              LDR      r0,|L2.64|
+000022  4808              LDR      r0,|L2.68|
 000024  f7fffffe          BL       GPIO_Init
-;;;37       /* Configure PA0 in input mode */
-;;;38       GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-;;;39       GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+;;;30     		/* Configure PA0 in input mode */
+;;;31     		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+;;;32     		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 000028  6025              STR      r5,[r4,#0]  ; GPIO_InitStructure
 00002a  7126              STRB     r6,[r4,#4]
-;;;40       GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-00002c  71e5              STRB     r5,[r4,#7]
-;;;41       GPIO_Init(GPIOA, &GPIO_InitStructure);
-00002e  4621              MOV      r1,r4
-000030  e8bd4070          POP      {r4-r6,lr}
-000034  4803              LDR      r0,|L2.68|
-000036  f7ffbffe          B.W      GPIO_Init
-;;;42     }
-;;;43     void Delay(__IO uint32_t nCount)
+;;;33     		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+00002c  2002              MOVS     r0,#2
+00002e  7160              STRB     r0,[r4,#5]
+;;;34     		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+000030  71e6              STRB     r6,[r4,#7]
+;;;35     		GPIO_Init(GPIOA, &GPIO_InitStructure);
+000032  4621              MOV      r1,r4
+000034  e8bd4070          POP      {r4-r6,lr}
+000038  4803              LDR      r0,|L2.72|
+00003a  f7ffbffe          B.W      GPIO_Init
+;;;36     }
+;;;37     void Delay(__IO uint32_t nCount)
                           ENDP
 
-00003a  0000              DCW      0x0000
-                  |L2.60|
-                          DCD      ||.data||
+00003e  0000              DCW      0x0000
                   |L2.64|
-                          DCD      0x40020c00
+                          DCD      ||.data||
                   |L2.68|
+                          DCD      0x40020c00
+                  |L2.72|
                           DCD      0x40020000
 
                           AREA ||i.main||, CODE, READONLY, ALIGN=2
@@ -85,61 +87,43 @@
 ;;;6      
 ;;;7      int main(void)
 000000  f7fffffe          BL       GPIO_Configuration
-;;;8      {
-;;;9      	
-;;;10       GPIO_Configuration();
-;;;11     	GPIO_ResetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15 );
-000004  4c14              LDR      r4,|L3.88|
+;;;8      {					
+;;;9      		GPIO_Configuration();
+;;;10     		GPIO_ResetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15 );
+000004  4c0a              LDR      r4,|L3.48|
 000006  f44f4170          MOV      r1,#0xf000
 00000a  4620              MOV      r0,r4
 00000c  f7fffffe          BL       GPIO_ResetBits
-;;;12       while (1)
-;;;13       {
-;;;14     			//GPIO_SetBits(GPIOD,GPIO_Pin_12| GPIO_Pin_13|GPIO_Pin_14 | GPIO_Pin_15);
-;;;15     			GPIO_Write(GPIOD,0x1000);
-000010  14a6              ASRS     r6,r4,#18
-;;;16     			Delay(1000000);
-000012  4d12              LDR      r5,|L3.92|
-;;;17     		GPIO_Write(GPIOD,0x2000);
-000014  0077              LSLS     r7,r6,#1
-;;;18     			Delay(1000000);
-;;;19     		GPIO_Write(GPIOD,0x4000);
-000016  f44f4880          MOV      r8,#0x4000
-;;;20     			Delay(1000000);
-;;;21         GPIO_Write(GPIOD,0x8000);
-00001a  f44f4900          MOV      r9,#0x8000
-                  |L3.30|
-00001e  4631              MOV      r1,r6                 ;15
-000020  4620              MOV      r0,r4                 ;15
-000022  f7fffffe          BL       GPIO_Write
-000026  4628              MOV      r0,r5                 ;16
-000028  f7fffffe          BL       Delay
-00002c  4639              MOV      r1,r7                 ;17
-00002e  4620              MOV      r0,r4                 ;17
-000030  f7fffffe          BL       GPIO_Write
-000034  4628              MOV      r0,r5                 ;18
-000036  f7fffffe          BL       Delay
-00003a  4641              MOV      r1,r8                 ;19
-00003c  4620              MOV      r0,r4                 ;19
-00003e  f7fffffe          BL       GPIO_Write
-000042  4628              MOV      r0,r5                 ;20
-000044  f7fffffe          BL       Delay
-000048  4649              MOV      r1,r9
-00004a  4620              MOV      r0,r4
-00004c  f7fffffe          BL       GPIO_Write
-;;;22     			Delay(1000000);
-000050  4628              MOV      r0,r5
-000052  f7fffffe          BL       Delay
-000056  e7e2              B        |L3.30|
-;;;23       }
-;;;24     }
-;;;25     
+;;;11     		while (1)
+;;;12     		{		
+;;;13     				if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0))
+000010  4d08              LDR      r5,|L3.52|
+;;;14     						GPIO_ToggleBits(GPIOD,GPIO_Pin_12);
+000012  14a6              ASRS     r6,r4,#18
+                  |L3.20|
+000014  2101              MOVS     r1,#1                 ;13
+000016  4628              MOV      r0,r5                 ;13
+000018  f7fffffe          BL       GPIO_ReadInputDataBit
+00001c  2800              CMP      r0,#0                 ;13
+;;;15     				else
+;;;16     						GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+00001e  4631              MOV      r1,r6
+000020  4620              MOV      r0,r4
+000022  d002              BEQ      |L3.42|
+000024  f7fffffe          BL       GPIO_ToggleBits
+000028  e7f4              B        |L3.20|
+                  |L3.42|
+00002a  f7fffffe          BL       GPIO_ResetBits
+00002e  e7f1              B        |L3.20|
+;;;17     		}
+;;;18     }
+;;;19     
                           ENDP
 
-                  |L3.88|
+                  |L3.48|
                           DCD      0x40020c00
-                  |L3.92|
-                          DCD      0x000f4240
+                  |L3.52|
+                          DCD      0x40020000
 
                           AREA ||.data||, DATA, ALIGN=2
 
